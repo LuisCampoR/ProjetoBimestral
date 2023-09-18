@@ -1,0 +1,284 @@
+import os
+
+
+def enqueue(fila, elemento):
+  fila.append(elemento)
+
+def dequeue(fila):
+  if len(fila) == 0:
+    return "A fila esta vazia!"
+  else:
+    return fila.pop(0)
+
+def peekF(fila):
+  if len(fila) == 0:
+    return "A fila esta vazia!"
+  else:
+    return fila[0]
+
+def is_empty(fila):
+  return len(fila) == 0 
+
+def sizeF(fila):
+  return len(fila)
+
+def criarPilha():
+  pilha = []
+  return pilha
+
+def verificarVazio(pilha):
+ return len(pilha) == 0
+
+def push(pilha, item):
+  pilha.append(item)
+
+def pop(pilha):
+  if not verificarVazio(pilha):
+    return pilha.pop()
+  else:
+    return "Vazio!"
+
+def peek(pilha):
+  if not verificarVazio(pilha):
+    return pilha[-1]
+  else:
+    return "Compras vazias!"
+
+def size(pilha):
+  return len(pilha)
+
+compraDeCruz = criarPilha()
+diaDoCruz = criarPilha()
+
+compraDeViagem = criarPilha()
+diaDaViagem = criarPilha()
+
+def compraViagem(escolha, dicionarioVia, compraDeViagem, diaDaViagem):
+  chaves = dicionarioVia.keys()
+
+  for chaves in dicionarioVia:
+    if chaves == escolha:
+      push(compraDeViagem, chaves)
+
+  while True:
+    print("Agora, escolha uma data para a viagem, temos as seguintes opções: ")
+    op = int(input("Opção 1: 20/12/2023 volta 27/12/2023 - Opção 2: 05/01/2024 volta 10/01/2024 - Opção 3: 05/02/2024 volta 10/02/2024, Escolha entre 1, 2 ou 3 "))
+    if op == 1:
+      push(diaDaViagem, "20/12/2023")
+      print("Data selecionada com sucesso!")
+      os.system('clear') or None
+      break
+    elif op == 2:
+      push(diaDaViagem, "05/01/2024")
+      print("Data selecionada com sucesso!")
+      os.system('clear') or None
+      break
+    elif op == 3:
+      push(diaDaViagem, "05/02/2024")
+      print("Data selecionada com sucesso!")
+      os.system('clear') or None
+      break
+    else:
+      print("Opção inserida incorretamente, por favor, selecione novamente!")
+
+  while True:
+    compra = input("Deseja desfazer a ultima compra? S ou N ")
+    if compra == 'S':
+      if verificarVazio(compraDeViagem):
+        print("Você não possui nenhuma compra!")
+      else:
+        print("A compra da viagem: ", pop(compraDeViagem), " foi desfeita!", pop(diaDaViagem))
+    elif compra == 'N':
+      compra = input("Então talvez queira comprar mais uma viagem? S ou N ")
+      if compra == 'S':
+        viagens(compraDeViagem, diaDaViagem)
+        break
+      elif compra == 'N':
+        print("Que pena!")
+        break
+      else:
+        print("Opção inserida incorretamente, por favor, selecione novamente!")
+
+def compraCruzeiro(escolha, dicionarioCruz, compraDeCruz, diaDoCruz):
+  chaves = dicionarioCruz.keys()
+  
+  vagasTropical = []
+  enqueue(vagasTropical, "Luis")
+  enqueue(vagasTropical, "Ramon")
+  enqueue(vagasTropical, "Paulo")
+
+  while True:
+    if escolha == "Tropical":
+      con = input("Esse cruzeiro não possui vagas no momento, deseja entrar na fila de espera? S ou N")
+      if con == 'S':
+        nome = input("Deixe um nome na fila de espera: ")
+        enqueue(vagasTropical, nome)
+        print("Você foi colocado na fila de espera!")
+        break
+      elif con == 'N':
+        print("Redirecionamento para tela de seleção de cruzeiro")
+        cruzeiros(compraDeCruz, diaDoCruz)
+        break
+      elif con != 'S' and con != 'N':
+        print("Comando incorreto! Por favor, digite 'S' ou 'N'")
+    else:
+      break
+        
+  
+  
+  for chaves in dicionarioCruz:
+    if chaves == escolha:
+      push(compraDeCruz, chaves)
+
+  while True:
+    print("Agora, escolha uma data para o cruzeiro, temos as seguintes opções: ")
+    op = int(input("Opção 1: 13/01/2024 - Opção 2: 20/01/2024 - Opção 3: 05/02/2024, \nEscolha entre 1, 2 ou 3: "))
+    if op == 1:
+      push(diaDoCruz, "13/01/2024")
+      print("Data selecionada com sucesso!")
+      os.system('clear') or None
+      break
+    elif op == 2:
+      push(diaDoCruz, "20/01/2024")
+      print("Data selecionada com sucesso!")
+      os.system('clear') or None
+      break
+    elif op == 3:
+      push(diaDoCruz, "05/02/2024")
+      print("Data selecionada com sucesso!")
+      os.system('clear') or None
+      break
+    else:
+      print("Opção inserida incorretamente, por favor, selecione novamente!")
+
+  while True:
+    compra = input("Deseja desfazer a última compra? S ou N ")
+    if compra == 'S':
+        if verificarVazio(compraDeCruz):
+            print("Você não possui nenhuma compra!")
+        else:
+            print("A compra do cruzeiro: ", pop(compraDeCruz), " foi desfeita!")
+            pop(diaDoCruz)
+    elif compra == 'N':
+        compra = input("Então talvez queira comprar mais um cruzeiro? S ou N ")
+        if compra == 'S':
+            cruzeiros(compraDeCruz, diaDoCruz)
+            break
+        elif compra == 'N':
+            print("Que pena! Até a próxima!")
+            break 
+        else:
+            print("Comando incorreto! Por favor, digite 'S' ou 'N'")
+    else:
+        print("Comando incorreto! Por favor, digite 'S' ou 'N'")
+  
+def cruzeiros(compraDeCruz, diaDoCruz):
+    dicionarioCruz = {'Costa azul': 1.899, 'Golden Fleet': 2.399, 'Tropical': 3.999}
+    while True:
+        print("=========================================================")
+        dic = str(input("Deseja ver a nossa lista de cruzeiros? S ou N "))
+        print("=========================================================")
+
+        if dic == 'S':
+            for chave in dicionarioCruz:
+                print(chave)
+                print("============")
+              
+            compra = input("Deseja comprar uma vaga para algum dos cruzeiros? S ou N ")
+
+            if compra == 'S':
+                escolha = str(input("Qual cruzeiro lhe interessou? "))
+                if escolha != "Golden Fleet" and escolha != "Costa azul" and escolha != "Tropical":
+                    print("Não possuímos nenhum cruzeiro com esse nome!")
+                else:
+                    compraCruzeiro(escolha, dicionarioCruz, compraDeCruz, diaDoCruz)
+                    break
+            elif compra == 'N':
+                print("Que pena! Caso você deseje, temos ótimas viagens!")
+                break 
+            else:
+                print("Comando incorreto!")
+                os.system('clear') or None
+
+        elif dic == 'N':
+            escolha = str(input("Digite o nome do cruzeiro que você procura: "))
+            if escolha not in dicionarioCruz:
+                print("Não possuímos nenhum cruzeiro com esse nome!")
+            else:
+                print("Cruzeiro encontrado!")
+                print("Valor do cruzeiro: ", dicionarioCruz.get(escolha))
+                compra = input("Deseja comprar uma vaga para o cruzeiro? S ou N ")
+                if compra == 'S':
+                    print("Ótimo!")
+                    compraCruzeiro(escolha, dicionarioCruz, compraDeCruz, diaDoCruz)
+                elif compra == 'N':
+                    print("Que pena! Caso você deseje, temos ótimas viagens!")
+                    break 
+                else:
+                    print("Comando incorreto!")
+
+        else:
+            print("Comando incorreto! Por favor, digite S ou N")
+                  
+def viagens(compraDeViagem, diaDaViagem):
+  dicionarioVia = {'Japão' : 11.999 , 'EUA' : 6.599, 'França' : 8.299}
+  chaves = dicionarioVia.keys()
+
+  while True:
+      print("=========================================================")
+      dic = str(input("Deseja ver a nossa lista de viagens? S ou N "))
+      print("=========================================================")
+      if dic == 'S':
+        for chaves in dicionarioVia:
+            print(chaves)
+            print("============")
+        compra = str(input("Deseja comprar uma vaga para alguma das viagens? S ou N "))
+        if compra == 'S':
+            escolha = input("Qual viagem lhe interessou? ")
+            if escolha != "Japão" and escolha != "EUA" and escolha != "França":
+                print("Não possuímos nenhuma viagem com esse nome!")
+            else:
+                compraViagem(escolha, dicionarioVia, compraDeViagem, diaDaViagem)
+                break
+        elif compra == 'N':
+            print("Que pena! Caso você deseje, temos ótimos cruzeiros!")
+            break 
+        else:
+            print("Comando incorreto!")
+      elif dic == 'N':
+          escolha = str(input("Digite o país que você procura: "))
+          if escolha not in dicionarioVia:
+            print("Não possuímos nenhuma viagem para um país com esse nome!")
+          else:
+            print("Viagem encontrada!")
+            print("Valor da viagem: ", dicionarioVia.get(escolha))
+            compra = input("Deseja comprar uma passagem para a viagem? S ou N ")
+            if compra == 'S':
+                print("Ótimo!")
+                compraViagem(escolha, dicionarioVia, compraDeViagem, diaDaViagem)
+            elif compra == 'N':
+                print("Que pena! Caso você deseje, temos ótimos cruzeiros!")
+                break 
+            else:
+                print("Comando incorreto!")
+
+
+
+print("==================================================================")
+print("Bem vindo ao melhor lugar para encontrar suas viagens e cruzeiros!")
+print("==================================================================")
+
+while True:
+  tipo = input("Para começarmos, você deseja encontrar viagens ou cruzeiros? ")
+
+  match tipo:
+    case 'cruzeiro' | 'Cruzeiro' | 'Cruzeiros' | 'cruzeiros':
+      os.system('clear') or None
+      cruzeiros(compraDeCruz, diaDoCruz)
+      break
+    case 'viagem' | 'Viagem' | 'viagens' | 'Viagens':
+      os.system('clear') or None
+      viagens(compraDeViagem, diaDaViagem)
+      break
+    case _:
+      print("Opção não encontrada, por favor digite viagem ou cruzeiro")
